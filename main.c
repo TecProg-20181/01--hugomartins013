@@ -98,15 +98,17 @@ Image rotate_90_right(Image image) {
     return rotated;
 }
 
-void invert_colors(unsigned short int pixel[512][512][3],
-                    unsigned int width, unsigned int height) {
-    for (unsigned int i = 0; i < height; ++i) {
-        for (unsigned int j = 0; j < width; ++j) {
-            pixel[i][j][0] = 255 - pixel[i][j][0];
-            pixel[i][j][1] = 255 - pixel[i][j][1];
-            pixel[i][j][2] = 255 - pixel[i][j][2];
+void invert_colors(Image image) {
+    Image invert = image;
+
+    for (unsigned int i = 0; i < invert.height; ++i) {
+        for (unsigned int j = 0; j < invert.width; ++j) {
+            invert.pixel[i][j][0] = 255 - invert.pixel[i][j][0];
+            invert.pixel[i][j][1] = 255 - invert.pixel[i][j][1];
+            invert.pixel[i][j][2] = 255 - invert.pixel[i][j][2];
         }
     }
+    return invert;
 }
 
 Image cut_image(Image image, int x, int y, int width, int height) {
@@ -232,7 +234,7 @@ int main() {
                 break;
             }
             case 6: { // Inversao de Cores
-                invert_colors(image.pixel, image.width, image.height);
+                invert_colors(image);
                 break;
             }
             case 7: { // Cortar Imagem
